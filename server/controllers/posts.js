@@ -37,8 +37,23 @@ module.exports = {
         }
       }
     },
-    createPost: (req, res) => {
-      //code here
+    createPost: async (req, res) => {
+      //Grab items off req.body 
+      //title, content, img
+      const { title, content, img} = req.body;
+      //Get the current user
+      const {id} = req.session.user;
+      //Get database 
+      const db = req.app.get('db')
+      //Get the date value to create a new date
+      const date_created = new Date
+      //If statement to check if id is the correct user(checker)
+      if(!id){
+        return res.sendStatus(403)
+      }
+      // set variable to the post SQL statment to then post to the database as "new post" for that user
+      const post = await db.post.create_post([ title, content, img, id, date_created])
+      return res.status(200).send(post)
     },
     readPost: (req, res) => {
       req.app.get('db').post.read_post(req.params.id)
