@@ -19,7 +19,7 @@ module.exports = {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
     //Set newly created user to a registered user
-    const registeredUser = await db.create_user([username, hash, `https://robohash.org/${username}.png`]);
+    const registeredUser = await db.user.create_user([username, hash, `https://robohash.org/${username}.png`]);
     //Set current user to registered user
     const user = registeredUser[0];
     //Current user session is what was accessed
@@ -39,13 +39,13 @@ module.exports = {
         return res.status(401).send('User not found. Register before logging in.');
     }
     //Compare password to the users.hased password
-    const isAuthenticated = bycrpt.compareSync(password, user.hash);
+    const isAuthenticated = bcrypt.compareSync(password, user.password);
     if(!isAuthenticated){
         return res.status(403).send('Incorrect Password')
     }
     //Set current user session to logged in user
     req.session.user = {id: user.id, username: user.username,
-    profilePic: `https://robohash.org/${username}.png`};
+    profile_pic: `https://robohash.org/${username}.png`};
     return res.send(req.session.user);
 },
 //Logout an DESTROY the session. 

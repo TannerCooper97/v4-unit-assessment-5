@@ -1,3 +1,3 @@
 DELETE
-FROM helo_users
+FROM helo_posts
 WHERE id = $1;

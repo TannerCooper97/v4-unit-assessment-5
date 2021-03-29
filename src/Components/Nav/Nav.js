@@ -31,15 +31,16 @@ class Nav extends Component {
   }
   
   render() {
+    console.log(this.props)
       return this.props.location.pathname !== '/' &&
         <div className='nav'>
           <div className='nav-profile-container'>
-            <div className='nav-profile-pic'style={{ backgroundImage: `url('${this.props.profilePic}')` }}></div>
+            <div className='nav-profile-pic'style={{ backgroundImage: `url('${this.props.profile_pic}')` }}></div>
             <p>{this.props.username}</p>
           </div>
           <div className='nav-links'>
             <Link to='/dash'><img className='nav-img' src={homeLogo} alt='home' /></Link>
-            <Link to='/dash'><img className='nav-img' src={newLogo} alt='new post' /></Link>
+            <Link to='/form'><img className='nav-img' src={newLogo} alt='new post' /></Link>
           </div>
           <Link to='/'><img className='nav-img logout' src={logoutLogo} alt='logout' /></Link>
         </div>
